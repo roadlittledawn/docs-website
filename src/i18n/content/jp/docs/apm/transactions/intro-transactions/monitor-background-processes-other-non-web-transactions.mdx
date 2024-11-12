@@ -4,17 +4,28 @@ tags:
   - APM
   - Transactions
   - Intro to transactions
-metaDescription: 'In New Relic APM, a definition of non-web transactions, and how to custom instrument background tasks and other activity as non-web transactions.'
+metaDescription: 'In APM, a definition of non-web transactions, and how to custom instrument background tasks and other activity as non-web transactions.'
+freshnessValidatedDate: never
+translationType: machine
 ---
 
-このドキュメントでは、APMにおける**非ウェブトランザクション**とは何か、またバックグラウンドタスクや他の任意のアクティビティを、どのようにインストゥルメントして非ウェブトランザクションとしてレポートするかについて説明します。
+このドキュメントでは、 APMの <DNT>**non-web transactions**</DNT> とは何か、また、バックグラウンド タスクやその他の任意のアクティビティを非ウェブトランザクションとして報告するように計画する方法について説明します。
 
 ## 非ウェブトランザクションとは [#define]
 
-New Relic APMの[トランザクション](/docs/apm/transactions/intro-transactions/transactions-new-relic-apm)は、主に**ウェブ**と**非ウェブ**の2つのカテゴリーに分類されます。
+2 つの主要な APM[トランザクション](/docs/apm/transactions/intro-transactions/transactions-new-relic-apm)カテゴリは<DNT>**web**</DNT>と<DNT>**non-web**</DNT>です。
 
-* **ウェブトランザクション**は、ウェブリクエストによって開始したものとして検知したトランザクションです。APMがレポートする最も一般的なタイプのトランザクションです。
-* **非ウェブトランザクション**は、ウェブトランザクションではないトランザクションです。当社では、トランザクションがウェブリクエストによって開始したかどうかは検知しません。メッセージの手続きやバックグラウンドタスクなど、ウェブリクエストを扱わないプロセスやジョブも、非ウェブトランザクションに含まれます。
+* <DNT>
+    **Web transactions**
+  </DNT>
+
+  トランザクションは、Web リクエストによって開始されたものとして検出されます。これらは、 APMによって報告されるトランザクションの中で最も一般的なタイプです。
+
+* <DNT>
+    **Non-web transactions**
+  </DNT>
+
+  Web リクエストによって開始されたことが検出されないトランザクションです。 これには、メッセージ処理やバックグラウンド タスクなど、Web 要求を処理しないプロセスとジョブが含まれます。
 
 たとえば、データベース作業やメール送信などをサーバー上で定期的に実行するよう設定したとします。ソースはウェブリクエストではありませんが、サーバー上で実行されるプロセスです。
 
@@ -28,7 +39,7 @@ New Relic APMの[トランザクション](/docs/apm/transactions/intro-transact
       </th>
 
       <th>
-        コメント
+        コメントコメント
       </th>
     </tr>
   </thead>
@@ -72,13 +83,6 @@ New Relic APMの[トランザクション](/docs/apm/transactions/intro-transact
 
 <CollapserGroup>
   <Collapser
-    id="c-sdk"
-    title="C SDK"
-  >
-    [非ウェブトランザクションのインストゥルメント](/docs/agents/c-sdk/instrumentation/instrument-your-app-c-sdk#instrument-c-txn)の手順に従います。
-  </Collapser>
-
-  <Collapser
     id="go"
     title="Go"
   >
@@ -107,14 +111,14 @@ New Relic APMの[トランザクション](/docs/apm/transactions/intro-transact
     id="node"
     title="Node.js"
   >
-    [`startBackgroundTransaction()`](https://docs.newrelic.co.jp/docs/agents/nodejs-agent/supported-features/nodejs-custom-instrumentation#background-txn)を使用します。
+    [`startBackgroundTransaction()`](/docs/agents/nodejs-agent/supported-features/nodejs-custom-instrumentation#background-txn)を使用します。
   </Collapser>
 
   <Collapser
     id="php"
     title="PHP"
   >
-    トランザクションを非ウェブに指定するには：[`newrelic_background_job`](https://docs.newrelic.co.jp/docs/agents/php-agent/php-agent-api/newrelic_background_job)を使用して、フラグを`true`に設定します。
+    トランザクションを非ウェブとしてマークするには、[`newrelic_background_job`](/docs/agents/php-agent/php-agent-api/newrelic_background_job)を使用し、フラグを`true`に設定します。
 
     PHPエージェントは、コマンドラインで実行されるスクリプトを、すべて非ウェブトランザクションとしてレポートします。
   </Collapser>
@@ -138,17 +142,38 @@ New Relic APMの[トランザクション](/docs/apm/transactions/intro-transact
 
 ## 非ウェブトランザクションを表示する [#ui]
 
-New Relic UIで非ウェブトランザクションデータを表示するには、次のページのメインチャートに移動し、ドロップダウンで**非ウェブ**を選択します：
+New Relic UIで非ウェブトランザクション データを表示するには、次のページのメイン チャートに移動し、トランザクション タイプで <DNT>**Non-web**</DNT> オプションを選択します。
 
-* エンティティエクスプローラー：**[one.newrelic.com](https://one.newrelic.com) > Entity explorer > （エンティティを選択）> Summary**の順に移動します。
-* APM：**[one.newrelic.com](https://one.newrelic.com) > APM > （アプリを選択） > Summary**の順に移動します。
-* トランザクション：**[one.newrelic.com](https://one.newrelic.com) > APM >（アプリケーションを選択）> Monitor > Transactions**の順に移動します。
+* APM:
 
-## その他のヘルプ [#more_help]
+  <DNT>
+    **[one.newrelic.com > All capabilities](https://one.newrelic.com/all-capabilities) > APM & services**
+  </DNT>
 
-さらに支援が必要な場合は、これらのサポートと学習リソースを確認してください：
+  \> (アプリを選択) >
 
-* [Explorers Hub](https://discuss.newrelic.com/)を参照して、コミュニティから支援を受け、ディスカッションに参加してください。
-* [当社のサイトで回答を見つけ、サポートポータルの使用方法について学びます](/docs/using-new-relic/welcome-new-relic/get-started/find-help-use-support-portal)。
-* Linux、Windows、およびmacOSのトラブルシューティングツールである[New Relic Diagnosticsを実行します](/docs/using-new-relic/cross-product-functions/troubleshooting/new-relic-diagnostics)。
-* New Relicの[データセキュリティ](/docs/security)と[ライセンス](/docs/licenses)ドキュメントを見直してください。
+  <DNT>
+    **Summary**
+  </DNT>
+
+  に移動します。
+
+* 履歴書:
+
+  <DNT>
+    **[one.newrelic.com > All capabilities](https://one.newrelic.com/all-capabilities) > APM & Services**
+  </DNT>
+
+  へ移動します。 アプリを選択し、
+
+  <DNT>
+    **Monitor**
+  </DNT>
+
+  セクションの
+
+  <DNT>
+    **Transactions**
+  </DNT>
+
+  をクリックします。

@@ -7,17 +7,18 @@ tags:
 metaDescription: 'Security vulnerability update for New Relic .NET agent,  January 16, 2020'
 redirects:
   - /docs/security/security-privacy/security-bulletins/security-bulletin-nr20-01
+releaseDate: '2021-01-14'
 ---
 
 ## Summary
 
 A security update for the .NET agent corrects an issue where full SQL queries may be sent to the agent log.
 
-**Release date:** January 16, 2020
+<DNT>**Release date:**</DNT> January 16, 2020
 
-**Vulnerability identifier:** NR20-01
+<DNT>**Vulnerability identifier:**</DNT> NR20-01
 
-**Priority:** Medium
+<DNT>**Priority:**</DNT> Medium
 
 ## Affected software [#affected]
 
@@ -43,7 +44,7 @@ The following New Relic agent versions are affected:
   <tbody>
     <tr>
       <td>
-        [.NET Core agent](/docs/agents/net-agent/getting-started/net-agent-compatibility-requirements-net-core)
+        [.NET Core agent](/docs/apm/agents/net-agent/configuration/net-agent-configuration/)
       </td>
 
       <td>
@@ -84,7 +85,7 @@ The agent will only log this information when set to the `DEBUG` or `FINEST` log
 * Ensure that logging level is not set to `DEBUG` or `FINEST`.
 * Disable capturing of explain plans.
 * Ensure that file location of log files is secured.
-* [Update to the latest New Relic .NET agent.](https://docs.newrelic.com/docs/agents/net-agent/installation/update-net-agent)
+* [Update to the latest New Relic .NET agent.](/docs/agents/net-agent/installation/update-net-agent)
 
 ## Report security vulnerabilities to New Relic [#report]
 

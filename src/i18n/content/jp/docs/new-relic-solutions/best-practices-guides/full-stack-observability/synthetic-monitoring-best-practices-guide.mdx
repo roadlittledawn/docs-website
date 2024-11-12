@@ -3,146 +3,229 @@ title: Syntheticモニタリングのベストプラクティスガイド
 tags:
   - New Relic solutions
   - Best practices guides
-  - Full-stack observability
 metaDescription: Best practices designed to help you get the most out of New Relic's synthetic monitoring.
+freshnessValidatedDate: never
+translationType: human
 ---
 
-New RelicのSyntheticモニタリング (Selenium駆動型Chromeブラウザ) では、アプリケーションの監視とテストを通じて、エンドユーザーに影響する前に問題に対処することができます。以下は、そのフルパワーをすぐに活用するための5つのヒントです。
+Syntheticsモニタリングを使用すると、アプリを監視しテストできるので、エンドユーザーに影響が生じる前に問題に対処できます。そのフルパワーを活用するための5つのヒントを以下にご紹介します。
 
-<Callout variant="tip">
-  合成モニタリング、およびその他の[オブザーバビリティ プラットフォーム](https://one.newrelic.com)を使用するには、New Relicファミリーに参加してください。[サインアップ](https://newrelic.com/signup)して、わずか数秒で無料アカウントを作成できます。次に、毎月最大で100GBのデータを無料で取り込みます。期間無制限です。
-</Callout>
+<Steps>
+  <Step>
+    ## Syntheticモニターの選択 [#add-monitor]
 
-## 1. モニタータイプを監視ニーズに合わせる [#add-monitor]
+    Syntheticsモニターは、ウェブサイトのパフォーマンスを測定し、読み込み時間、稼働時間、平均ダウンロードサイズの集計値をキャプチャする仮想ブラウザです。また、ダウンタイムインシデントと各ページリソースに関する詳細な統計情報にもアクセスできます。
 
-Syntheticモニターは、Webサイトのパフォーマンスを測定し、各チェックを詳細に記録する仮想ブラウザです。また、ロードタイム、アップタイム、平均ダウンロードサイズのほか、概要、各ページリソースの詳細な統計情報、さらにダウンタイムインシデントを含む集計値も取得します。
+    モニターの対象と方法に応じて、[7種類のSyntheticモニター](/docs/synthetics/synthetic-monitoring/getting-started/types-synthetic-monitors)から選択できます。たとえば、[ステップモニター](/docs/synthetics/synthetic-monitoring/using-monitors/add-edit-monitors#stepmonitor)は、コードを記述せずにスクリプト化されたブラウザとして、本質的に機能するものを作成するための優れた方法です。Syntheticモニターの自動管理をお探しの場合は、当社の[NerdGraph API](/docs/apis/nerdgraph/examples/nerdgraph-synthetics-tutorial)を使用すると、API呼び出しを通じてSyntheticモニターを作成、更新、削除できます。
+  </Step>
 
-Syntheticモニターには4つのタイプがあります。ディプロイするタイプは監視の対象によって決まります。
+  <Step>
+    ## Syntheticモニターを追加する [#howto-1]
 
-* **Pingモニター**—サイトがアクセス可能であることを確実にします。
-* **シンプルブラウザモニター**—エンドユーザーパフォーマンスを確保します。
-* **スクリプト化ブラウザ**—特定のリソースを確保します。
-* **APIモニター**—アプリケーションサーバーやWebサイトの正常な動作を確保します。
+    1. モニターを追加するには、<DNT>**[one.newrelic.com &gt; All capabilities](https://one.newrelic.com/all-capabilities) &amp;gt; Synthetic Monitoring**</DNT>の順に移動します。
 
-### 設定方法 [#howto-1]
+       [EUベースのアカウント](/docs/using-new-relic/welcome-new-relic/get-started/introduction-eu-region-data-center)がある場合は、 <DNT>**[one.eu.newrelic.com](http://one.eu.newrelic.com)**</DNT>に移動します。
 
-1. モニターを追加するには、**[one.newrelic.com](http://one.newrelic.com) > Synthetics**（または、[EUベースのアカウント](/docs/using-new-relic/welcome-new-relic/get-started/introduction-eu-region-data-center)の場合は、[one.eu.newrelic.com](http://one.eu.newrelic.com)）に移動し、**Create monitor**をクリックします。モニタータイプ、名前、URL を指定します。
-2. オプション：検証文字列 (Pingとシンプルブラウザで利用可能)、または次のタイプの応答検証用のサブ文字列モニタリングを有効にする高度なオプションを追加します。
-   * **SSL検証 (pingとシンプルブラウザ用)。** このオプションは、SSL証明書チェーンの有効性を検証します。次の構文を実行することによって複製することができます。
+    2. <DNT>**Create monitor**</DNT>をクリックします。
 
-     ```
-     openssl s_client -servername <var>{YOUR_HOSTNAME}</var> -connect <var>{YOUR_HOSTNAME</var>}:443 -CApath /etc/ssl/certs > /dev/null
-     ```
-   * **HEADリクエストのバイパス (Ping用)。** このオプションは、デフォルトのHEADリクエストをスキップし、代わりにpingチェックを含むGET動詞を使用します。
-   * **Redirect is Failure (Ping用)。** Redirect is Failureが有効になっているときにリダイレクト結果が発生すると、Syntheticsは (リダイレクトにしたがって、結果のURLをチェックするのではなく) 結果をエラーとして分類します。
-3. モニターを実行するロケーションを選択します。
-4. 各場所でモニターを実行する頻度を選択します。
-5. オプション：アラート通知を設定します。
-6. **Create my monitor**を選択して確認します。
-7. 数分待機してから、[モニター指数](#bookmark)からモニターを確認します。
+       <img src="/images/synthetic_screenshot-crop_create-monitor.webp" title="Create your synthetic monitor" alt="A screenshot showing the location of the Create monitor button in the UI." />
 
-## 2. モニターインデックスページとともにすべてのモニターを表示します。 [#bookmark]
+    3. モニタータイプを選択し、すべての必須フィールドに入力します。
 
-継続的なアプリケーションパフォーマンス監視は、Webサービスの実施と正常な動作のほか、エラーの発生防止を確保するために不可欠です。Syntheticモニタリングは、選択された各場所ごとにウェブアプリケーションの自動テストを実行し、ダウンタイムインスタンス (「違反」) を記録し、各ページリソースの集計値、結果、そして詳細な統計データを収集することで、このような保証を提供します。
+    4. タグの追加、期間の変更、複数のブラウザやエミュレートされたデバイスの設定からの選択、または別の[ランタイムバージョン](/docs/synthetics/synthetic-monitoring/using-monitors/new-runtime)の選択ができます。pingおよび単純なブラウザモニターでは、検証文字列を追加できます。また、高度なオプションを使用して追加機能を有効にすることができます。
 
-モニターインデックスページを使用してこの情報を高いレベルで表示するか、個別のモニターを選択してpingモニターについては[サマリ](/docs/new-relic-one-monitors-index)、または単純でスクリプト化されたモニターについては[概要](/docs/synthetics/new-relic-synthetics/pages/synthetics-overview-page-view-monitors-performance)ページを表示し、時間の経過に伴うパフォーマンスについてのより深い洞察を得ます。
+       * <DNT>**Text validation (for ping and simple browser).**</DNT> このオプションは、指定されたテキストが応答に含まれていることを確認します。
+       * <DNT>**Verify SSL (for ping and simple browser).**</DNT> このオプションは、SSL証明書チェーンの有効性を検証します。次の構文を実行することによって複製することができます。
 
-### New Relic ONEでモニターを表示する方法: [#howto-2]
+    ```sh
+    openssl s_client -servername {YOUR_HOSTNAME} -connect {YOUR_HOSTNAME}:443 -CApath /etc/ssl/certs > /dev/null
+    ```
 
-<CollapserGroup>
-  <Collapser
-    id="summary-ui"
-    title="エンティティエクスプローラー"
-  >
-    New Relic Oneモニターインデックスページを使用してモニターのリストを表示する:
+    * <DNT>**Bypass HEAD request (for ping monitors).**</DNT> このオプションは、デフォルトのHEADリクエストをスキップし、その代わりにpingチェックを含むGET動詞を使用します。HEADリクエストが失敗した場合、GETリクエストは常時発生します。
+    * <DNT>**Redirect is Failure (for ping).**</DNT> `Redirect is Failure`が有効になっているときにリダイレクト結果が発生すると、Syntheticsモニターはリダイレクトにしたがって、結果のURLをチェックするのではなく、結果をエラーとして分類します。
 
-    **[one.newrelic.com](https://one.newrelic.com) > Entity explorer > Synthetic monitors**の順に移動します。
+    5. モニターを実行するロケーションを選択します。誤検出を避けるために、少なくとも3つの場所を選択するようにしてください。つまり、少なくとも1つの場所が成功した結果を返す場合、エンドポイントは稼働しており、アラートのトリガーを回避できます。
+    6. モニターの種類に応じて、<DNT>**Save monitor**</DNT>、 <DNT>**Validate**</DNT>、<DNT>**Write script**</DNT>のいずれかを行うよう求められます。
+    7. 結果を受け取ったら、[概要ページ](#summary-page)で表示します。
+  </Step>
 
-    詳しくは、New Relic Oneの[中核となるUIコンポーネントの操作](/docs/new-relic-one/use-new-relic-one/get-started/new-relic-one-core-ui-components)に関するドキュメンテーションを参照してください。
-  </Collapser>
+  <Step>
+    ## Syntheticモニターの概要ページを表示 [#summary-page]
 
-  <Collapser
-    id="overview-ui"
-    title="モニターインデックスページ"
-  >
-    [モニターインデックス](/docs/synthetics/new-relic-synthetics/pages/synthetics-monitors-index-access-your-monitors)ページを使用してモニターのリストを表示する:
+    概要ページには、Syntheticモニターのステータスに関する情報が表示されます。アラートをトリガーするアクティブなインシデントが作成された場合は、クリティカルなアラートリンクをクリックして新しいウィンドウを開きます。
 
-    [**one.newrelic.com**](http://one.newrelic.com/) **> Synthetics**の順に移動します。
-  </Collapser>
-</CollapserGroup>
+    <img src="/images/synthetic_screenshot-crop_monitor-critical-alert.webp" title="Synthetic monitor critical alert" alt="A screenshot that shows where your critical alerts are located in the UI." />
+  </Step>
 
-## 3. 個々のモニター結果を表示する [#view]
+  <Step>
+    ## アプリケーションのパフォーマンスの全体像を把握 [#synthetics-monitors]
 
-西海岸の顧客のWebアプリケーションのパフォーマンス状況を把握するだけでは不十分です。全国、そして世界各地でのパフォーマンス状況を表示できる必要があります。Syntheticモニターを活用し、[Results](/docs/synthetics/new-relic-synthetics/pages/synthetics-results-access-individual-monitor-runs)ページにアクセスすることで、開発から本番環境に至るまでのすべてがどのようにユーザーエクスペリエンスに影響するかを確認することができます。リストを並べ替えて、遅い結果、速い結果、その他の異常な結果を識別することで、意味深い結果を検出できます。または、場所別にフィルタリングし、モニターパフォーマンスが地域によってどのように異なるかを把握できます。(以下の「ネットワークタイミング」グラフは、一定期間にわたるWebページのパフォーマンスのスナップショットを示しています)
+    アプリケーションのパフォーマンス結果を継続的に確認して、ウェブサービスが適切に機能し、期待どおりに動作し、エラーが発生しないようにする必要があります。外形監視では、選択した場所ごとにウェブアプリケーションで自動テストを実行することで確実にします。Syntheticsモニターは、ダウンタイムインスタンスを記録し、各ページリソースの集計数、結果、および詳細な統計情報を収集します。
 
-### 操作方法： [#howto-3]
+    モニターの障害をすばやく検出するには、[Syntheticモニターページのインデックス](/docs/new-relic-one-monitors-index)ページを使用して、未解決のインシデントがあるモニター、24時間にわたる成功率、障害が発生した場所の数、モニター期間、モニタータイプを確認できます。モニターをクリックすると、[概要ページ](/docs/synthetics/new-relic-synthetics/pages/synthetics-overview-page-view-monitors-performance)が表示され、特定のモニターがどこで故障しているか、なぜ故障しているか（最後のエラーメッセージ、エラーレスポンスコード、ドメイン別の期間）などを評価するための情報が見つかります。この情報により、経時的なアプリケーションのパフォーマンスに関する深い洞察が提供されます。
 
-1. [**one.newrelic.com**](http://one.newrelic.com/) **> Synthetics**にアクセスし、**Monitors**タブからお使いのモニターを選択します。
-2. **Monitor > Results**と選択します。
-3. 監視対象の各場所に対して最も遅いページロードの最新のビューを取得します。
+    ### モニターをエンティティのリストで表示する [#howto-2]
 
-## 4. 各リソースのロードタイムへの影響を把握する [#impact]
+    <CollapserGroup>
+      <Collapser id="summary-ui" title="エンティティエクスプローラー">
+        モニターのリストを表示するには：
 
-[Synthetics Resources](/docs/synthetics/new-relic-synthetics/pages/synthetics-resources-understand-load-times)ページにアクセスし、ウェブサイト上の各リソース (CSS、JavaScript、画像、HTMLなど) がロード全体にどのように影響しているかを確認します。ランタイムに収集される詳細なメトリックスを掘り下げて調べ、サードパーティリソースによって費やされる時間に関するパフォーマンス情報を検出し、各リソースのHTTP応答コードを特定することができます。
+        <DNT>**[one.newrelic.com &gt; All capabilities](https://one.newrelic.com/all-capabilities)**</DNT>に移動し、次に<DNT>**Synthetic monitoring**</DNT>に移動します。
 
-### 操作方法： [#howto-4]
+        詳細については、[データの探索に関するドキュメントを](/docs/query-your-data/explore-query-data/browse-data/introduction-data-explorer/)参照してください。
+      </Collapser>
 
-1. [**one.newrelic.com**](http://one.newrelic.com/) **> Synthetics**にアクセスし、**Monitors**ドロップダウンメニューからお使いのモニターを選択します。
-2. **Monitor > Resources**と選択します。
+      <Collapser id="overview-ui" title="モニターインデックスページ">
+        [モニターインデックス](/docs/synthetics/new-relic-synthetics/pages/synthetics-monitors-index-access-your-monitors)ページを使用してモニターのリストを表示する:
 
-## 5. スクリプト化ブラウザテストを設定して開発する [#scripted-test]
+        <DNT>**[one.newrelic.com &gt; All capabilities](https://one.newrelic.com/all-capabilities) &amp;gt; Synthetic Monitoring**</DNT>に移動します。
+      </Collapser>
+    </CollapserGroup>
+  </Step>
 
-スクリプト化ブラウザを使用して、Selenium JavaScript Webdriverバインディングで複雑な監視ワークフローを構築できます。たとえば、アプリケーションにログインして特定のリンクにナビゲートし、ページ要素がロードされてアサーションを追加するのを待機できます。
+  <Step>
+    ## 個々のモニター結果の表示 [#view]
 
-### 操作方法： [#howto-5]
+    世界中のさまざまな地域からアクセスされるウェブアプリのパフォーマンスを確認できます。[結果](/docs/synthetics/new-relic-synthetics/pages/synthetics-results-access-individual-monitor-runs)ページには、開発から本番までのすべてがユーザー体験にいかに影響するかが表示されます。リストされているものを並べ替えて、問題のある領域や異常結果を特定できます。場所別にフィルタリングして、さまざまな場所からのモニターのパフォーマンスを比較してみてください。これを行うには、以下を実行します。
 
-1. [**one.newrelic.com**](http://one.newrelic.com/) **> Synthetics**の順に移動します。
-2. モニタータイプ (スクリプト化ブラウザなど) を選択します。
-3. モニターの名前と詳細 (Sitename.comのスクリプト化ブラウザなど) を入力します
-4. モニターを実行する場所 (ムンバイ、ソウル、コロンバス、モントリオールなど) を選択します。
-5. 各場所でモニターを実行する頻度 (5分など) を選択します。
-6. パフォーマンス違反が発生した際にチームに送信するアラート通知を設定します。
-7. これでスクリプトを記述する準備ができました。(以下は、メインナビゲーションページのパフォーマンステストに使用するスクリプトの例です)。
+    1. <DNT>**[one.newrelic.com &gt; All capabilities](https://one.newrelic.com/all-capabilities) &amp;gt; Synthetic Monitoring**</DNT>に移動します。
 
-```
-var assert = require('chai').assert;
-// script-wide timeout for all wait and waitandfind functions (in ms)
-var default_element_timeout = 190000;   //3 mins
-var default_pageload_timeout = 240000; //4 mins
-var navlinks = ["css-locator-1","css-locator-2"];
+    2. <DNT>**Monitor**</DNT>をクリックし、<DNT>**Results**</DNT>をクリックします。
 
-//sets element load timeout to 3 mins
-$browser.manage().timeouts().implicitlyWait(default_element_timeout);
-//sets page load timoeout to 4 mins
-$browser.manage().timeouts().pageloadTimeout(default_pageload_timeout);
+       監視対象の各場所に対して、最も遅いページロードの最新のビューを表示できます。
+  </Step>
 
-//test all the main nav page performances
-$browser.get("http://www.sitename.com").then(function(){
-return $browser.findelement($driver.by.classname("site-theme-example"));
-}).then(function(){
-  //verifies the nav list has loaded
-  return $browser.findelement($driver.by.classname("site-nav-list-example"));
-}).then(function(){
-  //loops through the navlinks array
-  navlinks.foreach(function(val, i, arr){
-  //finds and navigates to each navlink page
-  return
-$browser.findelement($driver.by.classname(navlinks[i])).click().then(function(){
-  //verifies that the nav list loaded before moving on
-  return $browser.findelement($driver.by.classname("site-nav-list-example")).then(function(){
-    //verifies that the page logo footer at bottom of page has loaded
-    return $browser.findelement($driver.by.classname("site-footer-logo"));
-    })
-   })
- })
-});
-```
+  <Step>
+    ## 各リソースのロードタイムへの影響を把握 [#impact]
 
-## その他のヘルプ [#more-tips]
+    [Syntheticsリソース](/docs/synthetics/new-relic-synthetics/pages/synthetics-resources-understand-load-times)ページでは、サイトのさまざまなコンポーネントが全体的な負荷にどのような影響を与えるかを確認できます。これらのコンポーネントには、CSS、JavaScript、画像、HTMLなどがあります。 ランタイムに収集される詳細なメトリクスを掘り下げて調べ、サードパーティリソースによって費やされる時間に関するパフォーマンス情報を検出し、各リソースのHTTP応答コードを特定することができます。これを行うには、以下を実行します。
 
-さらに支援が必要な場合は、これらのサポートと学習リソースを確認してください：
+    1. <DNT>**[one.newrelic.com](https://one.newrelic.com/all-capabilities)**</DNT>に移動し、次に<DNT>**Synthetic Monitoring**</DNT>をクリックします。
+    2. <DNT>**Monitors**</DNT>ドロップダウンメニューから、モニターを選択します。
+    3. <DNT>**Monitor**</DNT>をクリックし、<DNT>**Resources**</DNT>をクリックします。
+  </Step>
 
-* [Explorers Hub](https://discuss.newrelic.com/)を参照して、コミュニティから支援を受け、ディスカッションに参加してください。
-* [当社のサイトで回答を見つけ、サポートポータルの使用方法について学びます](/docs/using-new-relic/welcome-new-relic/get-started/find-help-use-support-portal)。
-* Linux、Windows、およびmacOSのトラブルシューティングツールである[New Relic Diagnosticsを実行します](/docs/using-new-relic/cross-product-functions/troubleshooting/new-relic-diagnostics)。
-* New Relicの[データセキュリティ](/docs/security)と[ライセンス](/docs/licenses)ドキュメントを見直してください。
+  <Step>
+    ## スクリプト化されたブラウザまたはスクリプト化されたAPIテストを設定して開発する [#scripted-test]
+
+    スクリプト化ブラウザモニターを使用すると、 Selenium JavaScript Webdriverで監視ワークフローを簡単に構築できます。たとえば、特定のページに移動し、ページ上の要素を見つけ、期待したテキストが見つかったことを確認し、スクリーンショットを撮ることができます。これを行うには、以下を実行します。
+
+    1. <DNT>**[one.newrelic.com &gt; All capabilities](https://one.newrelic.com/all-capabilities) &amp;gt; Synthetic Monitoring**</DNT>に移動します。
+    2. <DNT>**Create monitor**</DNT>ボタンをクリックします。
+    3. <DNT>**Scripted browser**</DNT>モニタータイプを選択します。
+    4. 名前を入力し、実行時間を選択し、モニターの期間を選択します。
+    5. モニターを実行する場所を選択します。たとえば、ムンバイ、ソウル、コロンバス、モントリオールなどです。
+    6. これでスクリプトを記述する準備ができました。`newrelic.com`のパフォーマンスをテストし、特定の要素が読み込まれたかどうかを確認するには、このサンプルスクリプトを参照してください。
+
+    ```js
+      /**
+       * Script Name: Best Practices Example - Chrome 100+
+       * Author:      New Relic
+       * Version:     1.0
+       * Purpose:     A simple New Relic Synthetics scripted browser monitor to navigate to a page, find an element, and assert on expected text.
+       */
+
+      // -------------------- DEPENDENCIES
+      const assert = require("assert")
+
+      // -------------------- CONFIGURATION
+      const PAGE_URL = "https://docs.newrelic.com/docs/synthetics/synthetic-monitoring/scripting-monitors/synthetic-scripted-browser-reference-monitor-versions-chrome-100/"
+      const TEXT_TO_CHECK = "Synthetic scripted browser reference (Chrome 100 and higher)"
+
+      // Set timeouts for page load and element finding
+      await $webDriver.manage().setTimeouts({
+        pageLoad: 30000, // 30 seconds for page load timeout
+        implicit: 5000, // 5 seconds for element finding timeout
+      })
+
+      // -------------------- START OF SCRIPT
+      console.log("Starting simplified synthetics script")
+
+      // Navigate to the page
+      console.log("Navigating to: " + PAGE_URL)
+      await $webDriver.get(PAGE_URL)
+
+      // Find the element with the specified text
+      const By = $selenium.By
+      const textElement = By.className("css-v50zng")
+
+      console.log("Checking for presence of element with text: " + TEXT_TO_CHECK)
+      const element = await $webDriver.findElement(textElement)
+      const text = await element.getText()
+
+      // Assert the text is present
+      console.log("Found text: " + text)
+      assert.equal(text, TEXT_TO_CHECK, "Expected text not found on the page")
+
+      // Take a screenshot
+      console.log("Taking screenshot")
+      await $webDriver.takeScreenshot()
+
+      console.log("Script completed successfully")
+    ```
+
+    スクリプト化されたAPIモニターを使用すると、Node.jsと`got`モジュールで監視ワークフローを簡単に構築できます。たとえば、APIを使用して認証し、応答コードをアサートすることができます。
+
+    1. <DNT>**[one.newrelic.com &gt; All capabilities](https://one.newrelic.com/all-capabilities) &amp;gt; Synthetic Monitoring**</DNT>に移動します。
+    2. <DNT>**Create monitor**</DNT>ボタンをクリックします。
+    3. <DNT>**Scripted API**</DNT>モニタータイプを選択します。
+    4. 名前を入力し、実行時間を選択し、モニターの期間を選択します。
+    5. モニターを実行する場所を選択します。たとえば、ムンバイ、ソウル、コロンバス、モントリオールなどです。
+    6. これでスクリプトを記述する準備ができました。APIリクエストを作成して応答を処理するこのサンプルスクリプトを参照してください。
+
+    ```js
+      /**
+       * Script Name: Best Practices Example - Node 16.10.0
+       * Author:      New Relic
+       * Version:     1.0
+       * Purpose:     A simple New Relic Synthetics scripted API monitor to make a GET request and assert on statusCode.
+       */
+
+      const assert = require("assert")
+
+      // Get secure credentials
+      const applicationId = $secure.APP_ID
+      const apiKey = $secure.API_KEY
+
+      // The URL for the API endpoint to get information about a specific application
+      const URL = `https://api.newrelic.com/v2/applications/${applicationId}.json`
+
+      // Define headers, including the API key for authentication
+      const headers = {
+        "X-Api-Key": apiKey,
+      }
+
+      // Make a GET request
+      $http.get({ url: URL, headers: headers }, function (error, response, body) {
+        // If error handling is needed, check if an error occurred during the request
+        // if (error) {
+        //   console.error("An error occurred:", error);
+        // Handle the error as needed, or rethrow to fail the monitor
+        //   throw error;
+        // }
+
+        // Assert the response status code is 200
+        assert.equal(response.statusCode, 200, "Expected HTTP status code 200")
+
+        // Log the status code to the console
+        console.log("Request Status Code:", response.statusCode)
+
+        // If further processing of the response body is needed, it can be done here
+        // For example, parsing JSON response (if response is in JSON format)
+        // const jsonData =
+        //   typeof body === "string"
+        //     ? JSON.parse(body)
+        //     : body
+
+        // Log the parsed JSON to the console
+        // console.log("Parsed JSON data:", jsonData)
+
+        // Check the application's health status
+        // const healthStatus = jsonData.application.health_status
+        // assert.equal(healthStatus, "green", "Expected the application's health status to be 'green'")
+
+        // If the assertion passes, the script will continue; otherwise, it will fail the monitor
+      })
+    ```
+  </Step>
+</Steps>

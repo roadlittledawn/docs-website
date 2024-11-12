@@ -4,161 +4,219 @@ tags:
   - Synthetics
   - Synthetic monitoring
   - Getting started
-metaDescription: 'New Relic''s synthetic monitoring capabilities give you automated, scriptable tools to monitor your websites, critical business transactions, and API endpoints.'
+  - Synthetic monitoring tutorial
+  - Synthetics tutorial
+metaDescription: Get started with New Relic by creating your first simple browser or scripted browser monitor.
+freshnessValidatedDate: never
+translationType: human
 ---
 
-Syntheticモニタリングは、ウェブサイト、重要なビジネストランザクション、およびAPIエンドポイントをモニターするための自動化されたスクリプト可能な一連のツールです。ユーザートラフィックのシミュレーションを行い、顧客が気づく前に重要なエンドポイントの障害やパフォーマンス低下を事前に検知し解決できます。
+ライブを維持する必要のあるアプリケーションがありますか？Syntheticモニタリングは、イシューが顧客に影響を与える前にそれらを積極的に把握して解決する上で役立ちます。インストールは一切必要ありません。
 
-<Callout variant="tip">
-  合成モニタリング、およびその他の[オブザーバビリティ プラットフォーム](https://one.newrelic.com)を使用するには、New Relicファミリーに参加してください。[サインアップ](https://newrelic.com/signup)して、わずか数秒で無料アカウントを作成できます。次に、毎月最大で100GBのデータを無料で取り込みます。期間無制限です。
-</Callout>
+## ページ読み込みパフォーマンスの確認 [#simple]
 
-## 重要な理由 [#why]
+当社のシンプルなブラウザモニターを使用すると、ページ全体の読み込みなど、1ページの可用性とパフォーマンスを確認できます。
 
-Syntheticモニタリングを使用して、以下のことができます。
+<Steps>
+  <Step>
+    ### New Relicアカウントにサインインします。 [#create]
 
-* エンドポイントの可用性とパフォーマンスを元のアプリケーションやインフラストラクチャとつなぎ、障害の状況を把握する。
-* 問題がネットワークやAWSの場所、サードパーティリソースの遅さ、バックエンドサービスやインフラストラクチャの健全性に起因するかどうかを簡単に診断します。
-* Syntheticモニタリングを構築自動化およびCI/CDパイプラインに追加し、パフォーマンスを自動的に追跡し、各デプロイメントの機能をチェックする。
-* ログイン手順、検索およびその他の重要なビジネストランザクションをテストするリアルなSeleniumを搭載した[スクリプト化ブラウザ](/docs/synthetics/new-relic-synthetics/scripting-monitors/writing-synthetic-scripts)を使用して、モニターをさらに拡張します。
-* [APIテスト](/docs/synthetics/new-relic-synthetics/scripting-monitors/writing-api-tests)を使用してAPIエンドポイントをモニターします。
+    New Relicアカウントにサインインしたら、<DNT>**[one.newrelic.com &gt; Synthetic monitoring &gt; Create a monitor](https://one.newrelic.com/synthetics-nerdlets/monitor-create)**</DNT>に移動します。<DNT>**Page load performance**</DNT>タイルを選択します。
+  </Step>
 
-## 詳細テスト [#advanced]
+  <Step>
+    ### URLにペーストする [#url]
 
-Syntheticモニタリングの使用により、ウェブサイトまたはAPIエンドポイントをプロアクティブにモニターできます。これにより、コンテンツが確実に利用できるようになるだけでなく、完全な機能を確実に実現できます。Syntheticモニタリングブラウザは、コンテンツがどの場所でも常に最新のものであるようにするために、世界中の場所から御社のサイトにSeleniumを搭載したリアルなGoogle Chromeブラウザを送るテストを行います。
+    <SideBySide>
+      <Side>
+        テストしたいページのURLをクリックしながら移動し、<DNT>**URL**</DNT>フィールドにドロップします。最良の結果を得るには、以下をお勧めします。
 
-[スクリプト化ブラウザ](/docs/synthetics/new-relic-synthetics/scripting-monitors/writing-synthetic-scripts)は、テスト機能を拡大し、一般的ではないユーザーフローやベータテストなどの複雑な手順もテストすることが可能です。例えば、ニュースレターへのサインアップやアイテムのカートへの追加、または簡単なJavaScriptのような言語を使用した重要な情報の検索などをユーザーが行えているかの確認ができます。APIエンドポイントに対しスクリプト化テストを実行可能にするAPIモニターでバックエンドテストも可能です。
+        * モニターのデプロイ元となる場所を少なくとも3つ選択します。これにより、確認における誤検知を回避できます。
+        * ChromeとFirefoxを組み合わせて、複数のブラウザタイプを使用します。
+        * <DNT>**Period**</DNT>ドロップダウンを使用して、確認期間を調整します。お客様に応じてテストする頻度を決めてください。
+      </Side>
 
-## 機能拡張されたモニタリングとレポート作成 [#enhanced-monitoring]
+      <Side>
+        <Video type="wistia" id="3cccmbp3o8" />
+      </Side>
+    </SideBySide>
+  </Step>
 
-Syntheticモニタリングではそれぞれのチェックの結果が[メトリックス](/docs/synthetics/new-relic-synthetics/dashboards/synthetics-overview-dashboard)に集計されるため、パターンを確認したり、パフォーマンスが悪い原因を特定したりすることができます。また、Syntheticモニタリングは[モニター結果をひとつひとつ](/docs/synthetics/new-relic-synthetics/using-monitors/viewing-monitor-results#understanding)保存しているため、Webサイトの不具合がどこで生じているのか正確に確認することが可能です。
+  <Step>
+    ### データを表示する [#simpledata]
 
-WebサイトやAPIエンドポイントがアクセス不能になった場合、[アラート](/docs/synthetics/new-relic-synthetics/using-monitors/alerting-synthetics)が通知されます。[プライベートロケーション](/docs/synthetics/new-relic-synthetics/private-locations/private-locations-overview-monitor-internal-sites-add-new-locations)を作成することで、地理的範囲の拡大や内部Webサイトのモニターもできるようになります。
+    <SideBySide>
+      <Side>
+        モニターがレポートを開始すると、Synthetics <DNT>**Summary page**</DNT>でデータを確認できます。<DNT>**[one.newrelic.com &gt; Synthetic monitoring](https://one.newrelic.com/synthetics-nerdlets)**</DNT> &amp;gt; (Select a monitor) &amp;gt; (View your <DNT>**Summary page**</DNT>)の順に移動します。
+      </Side>
 
-さらに詳しい確認を行うために、[モニター結果をクエリする](/docs/using-new-relic/data/understand-data/query-new-relic-data)こともできます。New Relicは、13ヶ月間モニター結果を保持しているため、使用に関して前年と比較することも可能です。
+      <Side>
+        <img title="View your summary page" alt="A screenshot of the summary page after a simple browser monitor reports data" src="/images/synthetic_screenshot-full_Results-page-for-simple-browser-monitor.webp" />
+      </Side>
+    </SideBySide>
+  </Step>
+</Steps>
 
-## 追加機能 [#feature-overview]
+## コードレス監視でシンプルなユーザーワークフローを模倣 [#step]
 
-Syntheticモニタリングには以下の機能が含まれます。
+一般的なユーザーワークフローを実行するコードレスステップモニターを構築できます。これは、異なるページ間の移動、ページ要素のテスト、テキストのテキストフィールドへの入力や送信など、アプリ全体の単純な動作を模倣したい場合に適しています。
 
-<table>
-  <thead>
-    <tr>
-      <th width={200}>
-        機能
-      </th>
+<Steps>
+  <Step>
+    ### New Relicアカウントにサインインします。 [#steplogin]
 
-      <th>
-        説明
-      </th>
-    </tr>
-  </thead>
+    New Relicアカウントにサインインしたら、<DNT>**[one.newrelic.com &gt; Synthetic monitoring &gt; Create a monitor](https://one.newrelic.com/synthetics-nerdlets/monitor-create)**</DNT>に移動します。<DNT>**User step execution**</DNT>タイルを選択します。
+  </Step>
 
-  <tbody>
-    <tr>
-      <td>
-        リアルブラウザ
-      </td>
+  <Step>
+    ### ステップモニターの作成 [#step]
 
-      <td>
-        **シンプルブラウザ**と**スクリプト化ブラウザ**モニターを使用して、Syntheticモニタリングはホストが稼動しているかどうかをただチェックしているだけではありません。完全に仮想化されたリアルなGoogle Chromeブラウザ（Selenium搭載）で実際のページコンテンツを読み込み、ユーザーのアクションを正確に反映するテストを行います。
-      </td>
-    </tr>
+    <SideBySide>
+      <Side>
+        モニターに名前を付け、モニターがワークフローを実行する頻度を選択し、使用可能なブラウザとエミュレートされたデバイスの種類を選択してから、モニターのデプロイ元を選択します。
 
-    <tr>
-      <td>
-        詳細な結果表示
-      </td>
+        <DNT>**[one.newrelic.com &gt; Synthetic monitoring &gt; Create a monitor](https://one.newrelic.com/synthetics-nerdlets/monitor-create)**</DNT>に移動し、次に<DNT>**User step execution**</DNT>を選択します。
+      </Side>
 
-      <td>
-        Syntheticモニタリングは13ヶ月間、モニターの実行結果をひとつひとつ保存しているため、[個々のチェックの詳細な内訳を表示](/docs/synthetics/new-relic-synthetics/using-monitors/viewing-monitor-results#understanding)できます。Webサイトのパフォーマンスと可用性のスナップショットを入手、また特定の問題を探し当てることが可能です。
-      </td>
-    </tr>
+      <Side>
+        <Video type="wistia" id="dum72g5b7z" />
+      </Side>
+    </SideBySide>
+  </Step>
 
-    <tr>
-      <td>
-        ブラウザモニタリングによる比較チャート
-      </td>
+  <Step>
+    ### ステップの定義 [#define]
 
-      <td>
-        New Relicの[比較チャート機能](/docs/synthetics/new-relic-synthetics/administration/compare-page-load-performance-browser-synthetics)を使用して、実際のユーザー（[ブラウザモニタリング](/docs/browser/new-relic-browser/getting-started/introduction-new-relic-browser)）のインタラクションとSyntheticモニター間の直接ページロードタイムの比較を行います。たとえば、ページの停止中に、傾向を対比して、問題がSyntheticモニタリングにも表示されているかどうか、またはその他の変数によって発生しているかどうかを確認できます。
-      </td>
-    </tr>
+    <SideBySide>
+      <Side>
+        あらかじめ用意された12のステップから選択して、組み合わせることができます。モニターは、ボタンをクリックすると別のページに移動するなどの単純なものにすることも、次のようなジャーニーをテストすることもできます。
 
-    <tr>
-      <td>
-        詳細なスクリプト化モニタリング
-      </td>
+        1. 顧客がウェブアプリにアクセスする
+        2. メールをページモーダルに入力する
+        3. ドロップダウンから選択し、別のページに移動する
+        4. このページで何か（購入するアイテムなど）を選択する
+        5. 安全な認証情報をフォームに入力してそのアイテムを購入し、それらのフォームを送信する
 
-      <td>
-        [スクリプト化ブラウザ](/docs/synthetics/new-relic-synthetics/scripting-monitors/writing-synthetic-scripts)を使用すると、Webサイトに対して複雑なテストケースの実行が可能です。チェックアウトやログインなどの重要な処理が、常にスムーズに実行されていることを確認し、不具合時に比較できるように、ベースラインの作成ができます。Node.jsをベースにした組み込み型スクリプトIDEにより、ブラウザから離れることなく、素早くスクリプトの作成ができます。
-      </td>
-    </tr>
+        構築する内容にかかわらず、モニターを保存する前に必ず<DNT>**Validate**</DNT>をクリックしてください。検証では、組み合わせたステップが正常に実行されることを確認します。
+      </Side>
 
-    <tr>
-      <td>
-        グローバルなテスト範囲
-      </td>
+      <Side>
+        <Video type="wistia" id="s4hd01vh9j" />
+      </Side>
+    </SideBySide>
+  </Step>
 
-      <td>
-        ユーザーがいつでも、どこからでもWebサイトにアクセスできるよう、世界中の地域からアクセス可能であることを確認します。[Syntheticモニタリング静的IPアドレス](/docs/apm/new-relic-apm/getting-started/networks#synthetics-public)を許可リストに追加することで、ファイアウォールの背後にあるサイトのモニターができます。[プライベートロケーション](/docs/synthetics/new-relic-synthetics/private-locations/private-locations-overview-monitor-internal-sites-add-new-locations)を使用すると、内部サイトのモニターや、地理的範囲が新しい場所まで広がります。
-      </td>
-    </tr>
+  <Step>
+    ### データを表示する [#stepdata]
 
-    <tr>
-      <td>
-        ポピュラーなアナリティクスプラットフォームとの互換性
-      </td>
+    <SideBySide>
+      <Side>
+        モニターがレポートを開始すると、Synthetics <DNT>**Summary page**</DNT>でデータを確認できます。<DNT>**[one.newrelic.com &gt; Synthetic monitoring](https://one.newrelic.com/synthetics-nerdlets)**</DNT> &amp;gt; (Select a monitor) &amp;gt; (View your <DNT>**Summary page**</DNT>)の順に移動します。
+      </Side>
 
-      <td>
-        Syntheticモニタリングは、Google Analyticsのような[ポピュラーなアナリティクスサービス](https://s3.amazonaws.com/nr-synthetics-assets/default-hostnames-blacklist/production/default-hostnames-blacklist.txt)向けのスクリプトを特に除外します。これにより、毎月Webサイトのモニターチェックが数千に及んでも、アナリティクスツールによって確実に同じデータが受信され続けます。
+      <Side>
+        <img title="View your summary page" alt="A screenshot of the summary page after a simple browser monitor reports data" src="/images/synthetic_screenshot-crop_Step-monitor-summary-page.webp" />
+      </Side>
+    </SideBySide>
+  </Step>
+</Steps>
 
-        デフォルトでブロックされているサービスの[ブロックを解除](/docs/synthetics/new-relic-synthetics/scripting-monitors/write-scripted-browsers#unblock-service)したり、他のサービスを[ブロック](/docs/synthetics/new-relic-synthetics/scripting-monitors/synthetics-scripted-browser-reference#browser-addHostnameToBlacklist)することもできます。
-      </td>
-    </tr>
+## スクリプト化された監視を使用したサイトの動作確認 [#script]
 
-    <tr>
-      <td>
-        REST API関数
-      </td>
+スクリプト化されたブラウザモニターは、ウェブサイトの動作確認ができる柔軟なモニタータイプです。スクリプトを使用すると、スクリプト化した条件に応じて、サイト全体で異なるパスを選択して、顧客のようにウェブアプリに応答するモニターをデプロイできます。
 
-      <td>
-        Syntheticモニタリングには、以下の管理に使用できるREST APIが含まれています。
+以下では、ステップモニターの代わりにスクリプト化ブラウザモニターを作成するよう選択できます。
 
-        * [シンプルモニター](/docs/apis/synthetics-rest-api/monitor-examples/manage-synthetics-monitors-via-rest-api)と[スクリプト化モニター](/docs/apis/synthetics-rest-api/monitor-examples/manage-synthetics-monitor-scripts-rest-api)
-        * [モニターのカテゴリとラベル](/docs/apis/synthetics-rest-api/monitor-examples/use-synthetics-label-apis)
-        * [アラート通知](/docs/apis/synthetics-rest-api/alert-examples/manage-synthetics-alert-notifications-rest-api)
-      </td>
-    </tr>
-  </tbody>
-</table>
+* カスタムタイムアウト値の定義
+* ステップビルダーで提供対象外のアクションを実行するスクリプトの作成
+* 条件が満たされた場合にモニターパスを変更する条件の設定
 
-## データ保護とプライバシー [#security]
+<Tabs>
+  <TabsBar>
+    <TabsBarItem id="URL">
+      URLに移動する
+    </TabsBarItem>
 
-Syntheticモニタリングからのデータはテストデータで、ウェブページやアプリケーションとの通常のインタラクションを表します。人間からの実際のデータであることは絶対にありません。よって、お客様がSyntheticモニタリングを使用する際に収集されたデータは、個人データではありません。詳しい情報については、[Syntheticモニタリングセキュリティドキュメント](/docs/synthetics/new-relic-synthetics/getting-started/security-new-relic-synthetics)を参照してください。
+    <TabsBarItem id="element">
+      ページ要素を操作する
+    </TabsBarItem>
 
-## 互換性と要件 [#compatibility]
+    <TabsBarItem id="wait">
+      ページ要素の待機
+    </TabsBarItem>
 
-Syntheticモニタリングには、[対応ブラウザ](/docs/apm/new-relic-apm/getting-started/supported-browsers)以外のソフトウェアは必要ありません。
+    <TabsBarItem id="login">
+      Webサイトへのログイン
+    </TabsBarItem>
+  </TabsBar>
 
-<Callout variant="important">
-  [SyntheticモニタリングパブリックミニオンIPアドレス](/docs/synthetics/new-relic-synthetics/using-monitors/synthetics-public-minion-ips)を許可リストに追加することで、ファイアウォールの背後にあるサイトのモニターができます。
-</Callout>
+  <TabsPages>
+    <TabsPageItem id="URL">
+      ```js
+      //Visit `http://telco.nrdemo.com/`
+      $webDriver.get("http://telco.nrdemo.com/");
+      ```
 
-## アクセス権限 [#permissions]
+      `$webdriver.get()` モニターを監視対象ドメインに送信
+    </TabsPageItem>
 
-デフォルトでは、アカウントのすべてのユーザーは次の操作を行えます。
+    <TabsPageItem id="element">
+      ```js
+      $webDriver.get("http://telco.nrdemo.com/").then(function(){
+      //Find a link with display text that matches `About`
+          return $webDriver.findElement($selenium.By.linkText("About")).click();
+      //Click the link that matches `About`
+      }).then(function(){
+          return $webDriver.findElement($selenium.By.partialLinkText("Home")).click();
+      });
+      ```
 
-* [Syntheticモニタリングのページを表示する](/docs/synthetics/new-relic-synthetics/dashboards)。
-* モニターを[追加](/docs/synthetics/new-relic-synthetics/using-monitors/add-edit-monitors#adding-monitors)、[編集](/docs/synthetics/new-relic-synthetics/using-monitors/add-edit-monitors#editing-monitors)、および[削除](/docs/synthetics/new-relic-synthetics/using-monitors/add-edit-monitors#deleting-monitors)します。
+      モニターがURLに移動すると、`$webDriver.findElement()`は定義された要素を見つけ、アクション（この場合は`click()`）を実装します。アクションが完了すると、モニターは同じロジックを使用してホームページに戻ります。
+    </TabsPageItem>
 
-さらに細かく管理するために、[オプション権限システムを有効にする](/docs/synthetics/new-relic-synthetics/administration/synthetics-permissions-user-groups)ことができます。許可システムを使用すると、ユーザーがSyntheticモニタリング内で表示および編集するためのアクセスレベルを管理できます（例：モニターや[プライベートロケーション](/docs/synthetics/new-relic-synthetics/private-locations/private-locations-overview-monitor-internal-sites-add-new-locations)）。
+    <TabsPageItem id="wait">
+      ```js
+      async function waitForAndFindElement(locator, timeout){
+      const element = await $webDriver.wait($selenium.until.elementLocated(locator), timeout, 'Timed-out waiting for element to be located using: '+locator);
+      await $webDriver.wait($selenium.until.elementIsVisible(element), timeout, 'Timed-out waiting for element to be visible using ${element}');
+      return await $webDriver.findElement(locator);
+      }
 
-## その他のヘルプ [#more_help]
+      await $webDriver.get("http://telco.nrdemo.com/")
 
-さらに支援が必要な場合は、これらのサポートと学習リソースを確認してください：
+      await $webDriver.findElement($selenium.By.id("supportDropDown")).click();
 
-* [Explorers Hub](https://discuss.newrelic.com/)を参照して、コミュニティから支援を受け、ディスカッションに参加してください。
-* [当社のサイトで回答を見つけ、サポートポータルの使用方法について学びます](/docs/using-new-relic/welcome-new-relic/get-started/find-help-use-support-portal)。
-* Linux、Windows、およびmacOSのトラブルシューティングツールである[New Relic Diagnosticsを実行します](/docs/using-new-relic/cross-product-functions/troubleshooting/new-relic-diagnostics)。
-* New Relicの[データセキュリティ](/docs/security)と[ライセンス](/docs/licenses)ドキュメントを見直してください。
+      //Wait up to 20000 seconds for the FAQ page to appear
+      let aboutPage = await waitForAndFindElement($selenium.By.id("supportFAQLink"), 20000)
+      await aboutPage.click();
+      ```
+
+      スクリプト化されたブラウザモニターは、指定された時間待機してから、エラーを報告します。一部の画像や動的要素の生成には時間がかかるため、`$webDriver.waitForandFindElement()`にパラメーターを指定できます。このスニペットでは、モニターにより`"supportFAQLink"`が検出され、`20000`秒待ってからエラーが報告されます。
+    </TabsPageItem>
+
+    <TabsPageItem id="login">
+      ```js
+      $webDriver.get("http://example.com/login.jsp").then(function(){
+          return $webDriver.findElement($selenium.By.name("username")).sendKeys($secure.SECURE_USERNAME);
+      }).then(function(){
+      //Find the password field by specifying its name, then submits a secured password.
+          return $webDriver.findElement($selenium.By.name("password")).sendKeys($secure.SECURE_PASSWORD);
+      }).then(function(){
+      //Find and click the login button.
+          return $webDriver.findElement($selenium.By.xpath("//inp[@value='Login']")).click();
+      });
+      ```
+
+      ログイン情報を必要とする要素もテストできます。スクリプトに固有の資格情報を作成することをお勧めします。
+    </TabsPageItem>
+  </TabsPages>
+</Tabs>
+
+<DNT>**[one.newrelic.com &gt; Synthetic monitoring &gt; Create a monitor](https://one.newrelic.com/synthetics-nerdlets/monitor-create)**</DNT>に移動し、スクリプト化ブラウザの場合は<DNT>**User flow/functionality**</DNT>を選択します。
+
+## 次のステップ [#next]
+
+最初のモニターセットの作成が終わったので、その他の機能について確認しましょう。以下のドキュメントをご確認いただくことをお勧めします。
+
+* [Syntheticモニターのアラート](/docs/synthetics/synthetic-monitoring/using-monitors/alerts-synthetic-monitoring/)を設定してチェック失敗時に通知を受け取るようにする
+* すべてがどう機能するか気になりますか？[Syntheticモニターの概要を見る](/docs/synthetics/synthetic-monitoring/using-monitors/intro-synthetic-monitoring)

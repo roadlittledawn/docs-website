@@ -4,9 +4,7 @@ tags:
   - APM
   - Transactions
   - Intro to transactions
-translate:
-  - jp
-metaDescription: 'In New Relic APM, a definition of non-web transactions, and how to custom instrument background tasks and other activity as non-web transactions.'
+metaDescription: In APM, a definition of non-web transactions, and how to custom instrument background tasks and other activity as non-web transactions.
 redirects:
   - /docs/monitor-non-web-transactions-background-processes
   - /docs/monitor-background-processes-other-non-web-transactions
@@ -17,16 +15,17 @@ redirects:
   - /docs/apm/applications-menu/features/monitoring-background-processes
   - /docs/agents/manage-apm-agents/configuration/monitoring-background-processes
   - /docs/agents/manage-apm-agents/configuration/monitor-background-processes
+freshnessValidatedDate: never
 ---
 
-This document explains what **non-web transactions** are in APM, and how you can instrument background tasks and other arbitrary activity to be reported as non-web transactions.
+This document explains what <DNT>**non-web transactions**</DNT> are in APM, and how you can instrument background tasks and other arbitrary activity to be reported as non-web transactions.
 
 ## What are non-web transactions? [#define]
 
-The two main New Relic APM [transaction](/docs/apm/transactions/intro-transactions/transactions-new-relic-apm) categories are **web** and **non-web**.
+The two main APM [transaction](/docs/apm/transactions/intro-transactions/transactions-new-relic-apm) categories are <DNT>**web**</DNT> and <DNT>**non-web**</DNT>.
 
-* **Web transactions** are transactions we detect as being initiated by a web request; they are the most common type of transaction reported by APM.
-* **Non-web transactions** are transactions that are not web transactions; we do not detect they were initiated by a web request. This includes processes and jobs that do not handle web requests, such as message processing and background tasks.
+* <DNT>**Web transactions**</DNT> are transactions we detect as being initiated by a web request; they are the most common type of transaction reported by APM.
+* <DNT>**Non-web transactions**</DNT> are transactions where we do not detect they were initiated by a web request. This includes processes and jobs that do not handle web requests, such as message processing and background tasks.
 
 For example, you might schedule something to run periodically on your server to do database work, send emails, etc. The source is not a web request but something on your server.
 
@@ -84,13 +83,6 @@ To create new non-web transactions, follow the procedures for your APM language 
 
 <CollapserGroup>
   <Collapser
-    id="c-sdk"
-    title="C SDK"
-  >
-    Follow the procedures for [instrumenting a non-web transaction](/docs/agents/c-sdk/instrumentation/instrument-your-app-c-sdk#instrument-c-txn).
-  </Collapser>
-
-  <Collapser
     id="go"
     title="Go"
   >
@@ -119,14 +111,14 @@ To create new non-web transactions, follow the procedures for your APM language 
     id="node"
     title="Node.js"
   >
-    Use [`startBackgroundTransaction()`](https://docs.newrelic.com/docs/agents/nodejs-agent/supported-features/nodejs-custom-instrumentation#background-txn).
+    Use [`startBackgroundTransaction()`](/docs/agents/nodejs-agent/supported-features/nodejs-custom-instrumentation#background-txn).
   </Collapser>
 
   <Collapser
     id="php"
     title="PHP"
   >
-    To mark a transaction as non-web: use [`newrelic_background_job`](https://docs.newrelic.com/docs/agents/php-agent/php-agent-api/newrelic_background_job) and set the flag to `true`.
+    To mark a transaction as non-web: use [`newrelic_background_job`](/docs/agents/php-agent/php-agent-api/newrelic_background_job) and set the flag to `true`.
 
     The PHP agent reports all command-line run scripts as non-web transactions.
   </Collapser>
@@ -150,8 +142,7 @@ To create new non-web transactions, follow the procedures for your APM language 
 
 ## View non-web transactions [#ui]
 
-To view non-web transaction data in the New Relic UI, go to the main chart on the following pages, and then select the **Non-web** option in the dropdown:
+To view non-web transaction data in the New Relic UI, go to the main chart on the following pages, and then select the <DNT>**Non-web**</DNT> option in the transaction type dropdown:
 
-* New Relic Explorer: Go to **[one.newrelic.com](https://one.newrelic.com) > Explorer > (select an app) > Summary**.
-* APM: Go to **[one.newrelic.com](https://one.newrelic.com) > APM > (select an app) > Summary**.
-* Transactions: Go to **[one.newrelic.com](https://one.newrelic.com) > APM > (select an app) > Monitor > Transactions**.
+* APM: Go to <DNT>**[one.newrelic.com > All capabilities](https://one.newrelic.com/all-capabilities) > APM & services**</DNT> > (select an app) > <DNT>**Summary**</DNT>.
+* Transactions: Go to <DNT>**[one.newrelic.com > All capabilities](https://one.newrelic.com/all-capabilities) > APM & Services**</DNT>. Select an app, then under the <DNT>**Monitor**</DNT> section, click <DNT>**Transactions**</DNT>.

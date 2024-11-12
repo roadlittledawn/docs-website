@@ -5,15 +5,15 @@ releaseDate: '2021-05-14'
 learnMoreLink: 'https://discuss.newrelic.com/t/april-nerdlog-monthly-roundup/148346'
 ---
 
-![Marketo Nerdlog Banner 1920x1080](./images/Marketo-Nerdlog-Banner-1920x1080.png "Nerdlog Banner")
+![Marketo Nerdlog Banner 1920x1080](/images/Marketo-Nerdlog-Banner-1920x1080.webp 'Nerdlog Banner')
 
-*Get the scoop on the latest New Relic features from the people who built them—every Thursday at 12 p.m. PT (8 p.m. UTC) on the Nerdlog, our livestream, interactive changelog on [Twitch](http://twitch.tv/new_relic)! We demo new features and answer your burning questions. [Subscribe to our weekly Nerdlog emails](https://developer.newrelic.com/nerdlog) to get updates (like the ones below) or follow along in [What’s New](https://one.nr/0dOQMzrxPwG). And if you haven't already, [sign up for a free New Relic account today!](https://bit.ly/trynew_relic)*
+_Get the scoop on the latest New Relic features from the people who built them—every Thursday at 12 p.m. PT (8 p.m. UTC) on the Nerdlog, our livestream, interactive changelog on [Twitch](http://twitch.tv/new_relic)! We demo new features and answer your burning questions. [Subscribe to our weekly Nerdlog emails](https://developer.newrelic.com/nerdlog) to get updates (like the ones below) or follow along in [What’s New](https://one.nr/0dOQMzrxPwG). And if you haven't already, [sign up for a free New Relic account today!](https://bit.ly/trynew_relic)_
 
 Check out what we covered in April:
 
 ## Synthetics Step Builder: Test your complex website experiences w/o writing code
 
-New Relic Synthetics creates automated testing agents that measure the performance of your site. With our new step monitor, you can automate complex user flows for testing with no code. [Read the blog](https://blog.newrelic.com/product-news/nerdlog-synthetics-steps/) and [learn more in What's New](https://one.nr/01OwvgMa7Rv).
+Synthetic monitoring creates automated testing agents that measure the performance of your site. With our new step monitor, you can automate complex user flows for testing with no code. [Read the blog](https://blog.newrelic.com/product-news/nerdlog-synthetics-steps/) and [learn more in What's New](https://one.nr/01OwvgMa7Rv).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Gv8YflBQGTg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -53,6 +53,6 @@ Many of you operate in highly regulated, federal environments, making it critica
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/7rS6_Pl2HJM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## 
+##
 
-*[Subscribe to our weekly Nerdlog emails](https://developer.newrelic.com/nerdlog) to get updates (like the ones above) about the latest features and releases from the people who built them. Join the Nerdlog discussion every Thursday live at 12 p.m. PT (8 p.m. UTC) on [Twitch](http://twitch.tv/new_relic) or follow along in [What’s New](https://one.nr/0dOQMzrxPwG). And if you haven't already, [sign up for a free New Relic account today!](https://bit.ly/trynew_relic)*
+_[Subscribe to our weekly Nerdlog emails](https://developer.newrelic.com/nerdlog) to get updates (like the ones above) about the latest features and releases from the people who built them. Join the Nerdlog discussion every Thursday live at 12 p.m. PT (8 p.m. UTC) on [Twitch](http://twitch.tv/new_relic) or follow along in [What’s New](https://one.nr/0dOQMzrxPwG). And if you haven't already, [sign up for a free New Relic account today!](https://bit.ly/trynew_relic)_

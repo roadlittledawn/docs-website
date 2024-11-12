@@ -4,7 +4,7 @@ tags:
   - APM
   - APM UI pages
   - Monitoring
-metaDescription: 'Explanation of some types of New Relic APM and browser monitoring charts: duration time-based, histogram, and percentile.'
+metaDescription: "Explanation of some types of APM and browser monitoring charts: duration time-based, histogram, and percentile."
 redirects:
   - /docs/applications-dashboards/selecting-dashboard-views
   - /docs/applications-menu/selecting-dashboard-views
@@ -27,9 +27,10 @@ redirects:
   - /docs/data-analysis/user-interface-functions/response-time
   - /docs/data-analysis/user-interface-functions/view-your-data/response-time
   - /docs/using-new-relic/user-interface-functions/view-your-data/select-chart-views
+freshnessValidatedDate: never
 ---
 
-APM and browser monitoring have different types of charts available, including:
+<InlinePopover type="apm"/> and <InlinePopover type="browser"/> have different types of charts available, including:
 
 * [Response time charts](#time)
 * [Histograms](#histogram)
@@ -37,11 +38,15 @@ APM and browser monitoring have different types of charts available, including:
 
 For example, on the APM summary UI page, the chart types are represented with these icons:
 
-![New Relic APM summary UI page chart types](./images/new-relic-apm-chart-types.png "new-relic-ui-apm-chart-types.png")
+<img
+  title="new-relic-ui-apm-chart-types.png"
+  alt="APM summary UI page chart types"
+  src="/images/apm_screenshot-crop_chart-types.webp"
+/>
 
 ## Response time charts [#time]
 
-Response time charts are color-coded stacked bar charts. Response time is the duration of a [transaction](https://docs.newrelic.com/docs/apm/transactions/intro-transactions/transactions-new-relic-apm) from the perspective of the requester, and not necessarily the total sum of all time spent within a transaction.
+Response time charts are color-coded stacked bar charts. Response time is the duration of a [transaction](/docs/apm/transactions/intro-transactions/transactions-new-relic-apm) from the perspective of the requester, and not necessarily the total sum of all time spent within a transaction.
 
 The relationship between response time and total amount of time reflects how much concurrency is taking place within the instrumented code in your application.
 
@@ -61,31 +66,37 @@ The relationship between response time and total amount of time reflects how muc
   <tbody>
     <tr>
       <td style={{ textAlign: "center" }}>
-        **&lt;**
+        <DNT>
+          **&lt;**
+        </DNT>
       </td>
 
       <td>
-        If response time is **less than** the total time spent, you are taking advantage of concurrency with a non-blocking or asynchronous computing model.
+        If response time is <DNT>**less than**</DNT> the total time spent, you are taking advantage of concurrency with a non-blocking or asynchronous computing model.
       </td>
     </tr>
 
     <tr>
       <td style={{ textAlign: "center" }}>
-        **\\=**
+        <DNT>
+          **\\=**
+        </DNT>
       </td>
 
       <td>
-        If response time is **equal to** the total time spent, you may be using a blocking or synchronous computing model.
+        If response time is <DNT>**equal to**</DNT> the total time spent, you may be using a blocking or synchronous computing model.
       </td>
     </tr>
 
     <tr>
       <td style={{ textAlign: "center" }}>
-        **>**
+        <DNT>
+          **>**
+        </DNT>
       </td>
 
       <td>
-        If response time is **greater than** the total time spent, this may be due to resource contention. For example, if the response work runs in a highly contended thread pool, other jobs must finish before the response can complete. (The agent does not track time spent waiting for resources.)
+        If response time is <DNT>**greater than**</DNT> the total time spent, this may be due to resource contention. For example, if the response work runs in a highly contended thread pool, other jobs must finish before the response can complete. (The agent does not track time spent waiting for resources.)
       </td>
     </tr>
   </tbody>

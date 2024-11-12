@@ -1,27 +1,27 @@
 ---
 title: InsightsクエリAPI
 tags:
-  - Insights
   - Event data sources
-  - Insights API
-metaDescription: Use the New Relic Insights API and a query key to make remote queries to the events database via a standard HTTPS request.
+metaDescription: 'The New Relic Insights query API is an older API for querying data: now we recommend NerdGraph for querying'
+freshnessValidatedDate: never
+translationType: machine
 ---
 
 New Relic InsightsクエリAPIは、 NRQLクエリをするためのREST APIです。
 
 <Callout variant="tip">
-  **このAPIは、今ではNew Relicデータをクエリする優先方法ではありません。**[NerdGraph](/docs/apis/nerdgraph/get-started/introduction-new-relic-nerdgraph/)を使用してクエリしてください。
+  <DNT>**This API is no longer the preferred way to query New Relic data.**</DNT> [NerdGraph](/docs/apis/nerdgraph/get-started/introduction-new-relic-nerdgraph/)を使用してクエリしてください。
 </Callout>
 
 ## 要件および推奨 [#requirements]
 
-**このAPIは、今ではNew Relicデータをクエリする優先方法ではありません。**[NerdGraph](/docs/apis/nerdgraph/get-started/introduction-new-relic-nerdgraph/)を使用してクエリしてください。
+<DNT>**This API is no longer the preferred way to query New Relic data.**</DNT> 最善の結果を得るには、[NerdGraph](/docs/apis/nerdgraph/get-started/introduction-new-relic-nerdgraph)を使用してデータをクエリする必要があります。
 
 このAPIの使用は、ロール関連ユーザー権限で制限できます。
 
-New Relicにカスタムデータを追加するには、当社の[データ取り込みAPI](/docs/telemetry-data-platform/get-data-new-relic/getting-started/introduction-new-relic-data-ingest-apis-sdks/)を使用します。
+New Relicにカスタムデータを追加するには、[カスタムデータをレポート](/docs/data-apis/custom-data/get-custom-data-from-any-source)を参照してください。
 
-アカウントがEUデータセンターでデータをホストする場合は、適切な[EUリージョンアカウント向けAPIエンドポイント](/docs/using-new-relic/welcome-new-relic/getting-started/introduction-eu-region-data-center#endpoints)を使用していることを確認してください。
+お客様の組織がEUデータセンターでデータをホストする場合は、適切な[EU地域のエンドポイント](/docs/using-new-relic/welcome-new-relic/getting-started/introduction-eu-region-data-center#endpoints)を使用していることを確認してください。
 
 ## 1. APIキーの登録 [#register]
 
@@ -30,45 +30,51 @@ InsightsのクエリAPIを使用するには、クエリキーが必要です。
 安全上の理由から、APIキーを使用したクエリキーの変更や読み出しはできません。クエリキーの変更または読み取りには、New Relic UIを使用してください。
 
 <Callout variant="tip">
-  **このAPIは、今ではNew Relicデータをクエリする優先方法ではありません。**[NerdGraph](/docs/apis/nerdgraph/get-started/introduction-new-relic-nerdgraph/)を使用してクエリしてください。
+  <DNT>**This API is no longer the preferred way to query New Relic data.**</DNT> [NerdGraph](/docs/apis/nerdgraph/get-started/introduction-new-relic-nerdgraph/)を使用してクエリしてください。
 </Callout>
 
 新しいクエリキーを作成する場合は、以下の手順に従います。
 
-1. **[insights.newrelic.com](https://insights.newrelic.com) > データ管理 > APIキー**に移動します。
-2. **クエリキー**見出しの隣にある+アイコンを選択します。
-3. キーの簡単な説明を入力します。
-4. \[**Save your notes（注を保存）**] を選択します。
+1. [one.newrelic.com/api-keys](https://one.newrelic.com/api-keys)にアクセスしてください。 EUデータセンターをご利用の場合は、 [one.eu.newrelic.com/](https://one.eu.newrelic.com/api-keys) api-keysにアクセスしてください。 その代わり。
+
+2. APIキーページの右上隅にある<DNT>**Create a key button**</DNT>をクリックします。
+
+3. 新しいキーを設定します
+
+* 表示されたフィールドに新しいキーの名前を入力します
+* 説明を追加します（「クエリキー」など）
+
+4. <DNT>**Save**</DNT>をクリックして新しいキーを生成します。
 
 ## 2. APIクエリリクエストの作成 [#create-request]
 
-[クエリキーを作成または編集する](#register)場合は、テンプレートとして使用できるcurlクエリ例が表示されます。次のクエリルールに従わない限り、サンプルクエリは機能しません。
+[クエリキーを作成または編集する](#register)と、テンプレートとして使用できるサンプルの`curl`クエリが表示されます。 次のクエリ ルールに従わない限り、サンプル クエリは機能しません。
 
 * [NRQLのクエリ文字列](/docs/insights/nrql-new-relic-query-language/using-nrql/introduction-nrql)は[URLエンコードされて](http://www.w3schools.com/tags/ref_urlencode.asp)いなければなりません。
 * クエリ文字列は4000バイト未満でなければなりません。
 * URLには有効なアカウントIDを含める必要があります。
 * `X-Query-Key`には有効な[クエリキー](#register)を含める必要があります。
-* `Content-Type`は`application/json`にする必要があります。
+* `Content-Type`は`application/json`である必要があります。
 
 ### Linux [#unix]
 
-curl例を次に示します。
+`curl`の例を次に示します。
 
 ```
-curl -H "Accept: application/json" -H "X-Query-Key: <var>YOUR_QUERY_KEY</var>" "https://insights-api.newrelic.com/v1/accounts/<var><a href="/docs/accounts-partnerships/accounts/account-setup/account-id">YOUR_ACCOUNT_ID</a></var>/query?nrql=<var>YOUR_URL_ENCODED_QUERY</var>"
+curl -H "Accept: application/json" -H "X-Query-Key: YOUR_QUERY_KEY" "https://insights-api.newrelic.com/v1/accounts/<a href="/docs/accounts-partnerships/accounts/account-setup/account-id">YOUR_ACCOUNT_ID</a>/query?nrql=YOUR_URL_ENCODED_QUERY"
 ```
 
 ### Microsoft Windows [#windows]
 
-**Powershell**を使用して、APIでイベントをクエリできます。
+<DNT>**Powershell**</DNT>を使用して、APIでイベントをクエリできます。
 
 ```
-Invoke-WebRequest -Uri https://insights-api.newrelic.com/v1/accounts/<var><a href="/docs/accounts-partnerships/accounts/account-setup/account-id">YOUR_ACCOUNT_ID</a></var>/query?nrql=<var>YOUR_URL_ENCODED_QUERY</var> -Headers @{"X-Query-Key"="<var>YOUR_QUERY_KEY</var>"} -ContentType "application/json" -Method GET
+Invoke-WebRequest -Uri https://insights-api.newrelic.com/v1/accounts/<a href="/docs/accounts-partnerships/accounts/account-setup/account-id">YOUR_ACCOUNT_ID</a>/query?nrql=YOUR_URL_ENCODED_QUERY -Headers @{"X-Query-Key"="YOUR_QUERY_KEY"} -ContentType "application/json" -Method GET
 ```
 
 ## 3. JSON応答の処理 [#process-result]
 
-クエリAPIはJSON形式で結果を返します。リクエストごとの結果制限は2,000件です。
+クエリAPIはJSON形式で結果を返します。リクエストごとの結果制限は5,000件です。
 
 JSONデータの構造はリクエストで使用するNRQLによって決まり、`SELECT`文、句、関数の組み合わせに応じて適切な応答を返します。JSONを処理するコードを書く際は、クエリのテストを実行して結果のJSONを確認してください。
 
@@ -78,19 +84,23 @@ InsightsクエリAPIはJSONデータを返します。以下に、クエリ、�
 
 <CollapserGroup>
   <Collapser title="クエリ、クエリAPIリクエスト、結果データ">
-    **元のNRQLクエリ：**
+    <DNT>
+      **Original NRQL query:**
+    </DNT>
 
     ```
     SELECT count(appName) FROM PageView SINCE '2014-08-04 00:00:00+0500'
     ```
 
-    **cURLによるクエリリクエスト（URLエンコードされたNRQLクエリ）**：
+    <DNT>**Query cURL request (with URL-encoded NRQL query)**</DNT>：
 
     ```
-    curl -H "Accept: application/json" -H "X-Query-Key: <var>YOUR_QUERY_KEY</var>" "https://insights-api.newrelic.com/v1/accounts/<var>YOUR_ACCOUNT_ID</var>/query?nrql=SELECT+count%28appName%29+FROM+PageView+SINCE+%272014-08-04+00%3A00%3A00%2B0500%27"
+    curl -H "Accept: application/json" -H "X-Query-Key: YOUR_QUERY_KEY" "https://insights-api.newrelic.com/v1/accounts/YOUR_ACCOUNT_ID/query?nrql=SELECT+count%28appName%29+FROM+PageView+SINCE+%272014-08-04+00%3A00%3A00%2B0500%27"
     ```
 
-    **JSON形式の結果データ：**
+    <DNT>
+      **Returned JSON data:**
+    </DNT>
 
     ```
     {
@@ -135,9 +145,9 @@ InsightsクエリAPIはJSONデータを返します。以下に、クエリ、�
 
 ## レート制限のガイドライン [#rate-limiting]
 
-[クエリ制限](/docs/query-your-data/nrql-new-relic-query-language/get-started/rate-limits-nrql-queries/)があります。特に、これらの一般ガイドラインに従う場合は、これらの制限に遭遇することはありません。
+[クエリのレート制限](/docs/query-your-data/nrql-new-relic-query-language/get-started/rate-limits-nrql-queries/)があります。特に、これらの一般ガイドラインに従う場合は、これらの制限に遭遇することはありません。
 
 * 同時に実行される複雑なクエリ（例：`FACET`句や`TIMESERIES`句を含むクエリ、または100万件を超えるイベントのクエリ）でのリクエスト数を制限します。
 * 特に複雑なクエリを含む場合は、長期間にわたって並行して実行するリクエストの数を最大5件に制限します。
 
-New Relicによって[レート制限がアカウントに](/docs/insights/use-insights-ui/manage-account-data/rate-limits-insights)適用されている場合、クエリAPIは503エラーを返します。チャートではタイムアウトエラーメッセージを表示できます。
+New Relicによって1分あたりのクエリ数に対してレート制限がアカウントに適用されている場合、クエリAPIは429エラーを返します。New Relicによって検証されたレコードに対してレート制限がアカウントに適用されている場合、クエリAPIは503エラーを返し、チャートにタイムアウトエラーメッセージが表示されることがあります。

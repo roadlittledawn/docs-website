@@ -1,43 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { NavItem } from '@newrelic/gatsby-theme-newrelic';
+import KrNav from './KrNav';
+import JpNav from './JpNav';
+import EsNav from './EsNav';
+import PtNav from './PtNav';
+import EnNav from './EnNav';
+import StyleGuideNav from './StyleGuideNav';
 
-const RootNavigation = ({ nav }) => {
-  const tdp = nav.pages.find(
-    (page) => page.title === 'Telemetry Data Platform'
-  );
-  const fso = nav.pages.find(
-    (page) => page.title === 'Full-Stack Observability'
-  );
-  const ai = nav.pages.find(
-    (page) => page.title === 'Alerts and Applied Intelligence'
-  );
-
-  const pages = nav.pages.filter((page) => ![tdp, fso, ai].includes(page));
-
-  return (
-    <nav role="navigation" aria-label="Navigation">
-      <NavItem page={tdp} />
-      <NavItem page={fso} />
-      <NavItem page={ai} />
-      <hr />
-      {pages.map((page) => (
-        <NavItem key={page.title} page={page} />
-      ))}
-      <NavItem page={{ title: 'Release notes', url: '/docs/release-notes' }} />
-      <NavItem page={{ title: "What's new", url: '/whats-new' }} />
-      <NavItem
-        page={{
-          title: 'See our 370+ integrations',
-          url: 'https://newrelic.com/integrations',
-        }}
-      />
-    </nav>
-  );
-};
-
-RootNavigation.propTypes = {
-  nav: PropTypes.arrayOf(PropTypes.object).isRequired,
+const RootNavigation = ({ locale, className, isStyleGuide }) => {
+  const LOCALIZED_NAVS = {
+    kr: <KrNav className={className} />,
+    jp: <JpNav className={className} />,
+    en: <EnNav className={className} />,
+    es: <EsNav className={className} />,
+    pt: <PtNav className={className} />,
+  };
+  if (isStyleGuide) {
+    return <StyleGuideNav className={className} />;
+  }
+  return LOCALIZED_NAVS[locale] || <EnNav className={className} />;
 };
 
 export default RootNavigation;

@@ -10,6 +10,40 @@ const METADATA = [
   },
 ];
 
+// List of urls we don't want to have indexed by Swifttype or search engines
+const DO_NOT_INDEX = [
+  'docs/licenses/license-information/usage-plans/archived-add-on',
+];
+
+const surveyRecaptcha = (
+  <script
+    key="google-recaptcha"
+    async
+    defer
+    src="https://www.google.com/recaptcha/api.js?render=6Lehf-4oAAAAAK-sCeVSRUrRQfImJdwgc2pPkOwZ"
+  />
+);
+
+const isStyleGuidePage = (url) => {
+  return url.includes('docs/style-guide');
+};
+
+const isAgileHandbookPage = (url) => {
+  return url.includes('docs/agile-handbook');
+};
+
+const isMdxTestPage = (url) => url.includes('docs/mdx-test-page');
+
+const doNotIndex = (url, arr) => {
+  return arr.some((item) => url.includes(item));
+};
+
+const isExcludedFromIndexing = (url) =>
+  isStyleGuidePage(url) ||
+  isAgileHandbookPage(url) ||
+  isMdxTestPage(url) ||
+  doNotIndex(url, DO_NOT_INDEX);
+
 const DocsSiteSeo = ({
   location,
   title,
@@ -19,6 +53,9 @@ const DocsSiteSeo = ({
   disableSwiftype,
 }) => (
   <SEO location={location} title={title}>
+    {process.env.GATSBY_ENVIRONMENT === 'staging' && (
+      <meta name="robots" content="noindex" />
+    )}
     {disableSwiftype && <meta name="st:robots" content="nofollow, noindex" />}
     {METADATA.map((data) => (
       <meta key={data.name} {...data} />
@@ -52,9 +89,15 @@ const DocsSiteSeo = ({
       />
     )}
 
+    {isExcludedFromIndexing(location.pathname) && (
+      <meta name="robots" content="noindex, nofollow" />
+    )}
+
     {(description || title) && (
       <meta name="description" content={description || title} />
     )}
+
+    {surveyRecaptcha}
   </SEO>
 );
 
